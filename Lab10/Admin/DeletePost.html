@@ -1,0 +1,37 @@
+<html>
+        <title>Post</title>
+        <head></head>
+        <body>
+	        <form action="DeletePost.php" method="post">
+			<label for="deleteSelection"> Select posts to delete:<br></label>
+			<table id="deleteSelection" name="deleteSelection">
+				<tr> <th>Username</th><th>Content</th><th>Delete?</th></tr>
+                        <?php
+	                       $mysqli = new mysqli("mysql.eecs.ku.edu", "carterharrod", "oov7ahJu", "carterharrod");
+	                       if($mysqli->connect_errno) {
+		                       echo "Connection failed:" . $mysqli->connect_error . "<br>";
+		                       exit();
+		               }
+		               $query = "SELECT author_id, content, post_id FROM Posts;";
+			       if($result = $mysqli->query($query)) {
+			               while ($row = $result->fetch_assoc()) {
+				 		echo "<tr>";
+						echo "<td>" . $row["author_id"] . "</td>";
+						echo "<td>" . $row["content"] . "</td>";
+						echo "<td>";
+						echo "<input type=\"checkbox\" name=\"" . $row["post_id"] . "\" value=\"yes\">";
+						echo "</td>";
+						echo "</tr>";
+			               }
+			       } else {
+				       //echo "No Users Stored on Database<br>";
+			       }
+			       $mysqli->close();
+		        ?>
+		
+		        
+			</table>
+			<input type="submit">
+		</form>
+	</body>
+</html>

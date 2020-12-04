@@ -1,0 +1,29 @@
+<html>
+        <title>Post</title>
+        <head></head>
+        <body>
+	        <form action="ViewUserPosts.php" method="post">
+                       <label for="username"> Select Username: </label>
+                       <select name="username" id="username">
+                       <?php
+	                       $mysqli = new mysqli("mysql.eecs.ku.edu", "carterharrod", "oov7ahJu", "carterharrod");
+	                       if($mysqli->connect_errno) {
+		                       echo "Connection failed:" . $mysqli->connect_error . "<br>";
+		                       exit();
+		               }
+		               $query = "SELECT user_id FROM Users;";
+			       if($result = $mysqli->query($query)) {
+			               while ($row = $result->fetch_assoc()) {
+				 	      echo "<option value=\"" . $row["user_id"] . "\">" . $row["user_id"] . "</option>";
+			               }
+			       } else {
+				       echo "No Users Stored on Database<br>";
+			       }
+			       $mysqli->close();
+		        ?>
+
+		        </select><br>
+			<input type="submit">
+		</form>
+	</body>
+</html>
